@@ -41,3 +41,12 @@ sp = spotipy.Spotify(
 )
 
 user_id = sp.current_user()["id"]
+
+# Spotify playlist creation:
+
+uris = [sp.search(title)['tracks']['items'][0]['uri'] for title in song_titles]
+PLAYLIST_ID = sp.user_playlist_create(
+    user=user_id, public=False, name=f"{date} BillBoard-100")['id']
+
+sp.user_playlist_add_tracks(playlist_id=PLAYLIST_ID,
+                            tracks=uris, user=user_id)
